@@ -1,4 +1,4 @@
-package com.bbk.open.helloretrofit;
+package com.bbk.open.helloretrofit.rxjava;
 
 /**
  * Created by Administrator on 2016/8/11.

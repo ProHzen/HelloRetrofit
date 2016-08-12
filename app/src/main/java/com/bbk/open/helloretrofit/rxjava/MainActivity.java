@@ -1,4 +1,4 @@
-package com.bbk.open.helloretrofit;
+package com.bbk.open.helloretrofit.rxjava;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.bbk.open.helloretrofit.R;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -22,11 +23,17 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
@@ -47,7 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //对查询按钮侦听点击事件
         queryTV.setOnClickListener(this);
         weatherTV.setOnTouchListener(this);
-
+        //observableMap();
+        observableFlatMap();
     }
 
     @Override
@@ -190,19 +198,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .subscribe(new Subscriber<Weather>() {
                     @Override
                     public void onCompleted() {
-                        Log.d(TAG, " onCompleted  " + Thread.currentThread().getName());
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, " onError  " + Thread.currentThread().getName());
-
                     }
 
                     @Override
                     public void onNext(Weather weather) {
-                        Log.d(TAG, " onNext  " + Thread.currentThread().getName());
                         if (weather != null)
                             weatherTV.setText(weather.toString());
                     }
@@ -235,7 +238,132 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 );
     }
 
+    /**
+     * 打印学生名字的例子
+     */
+    private void observableMap() {
+        List<Course> mCourse = new ArrayList<>();
+        mCourse.add(new Course("English"));
+        mCourse.add(new Course("Chinese"));
+        mCourse.add(new Course("Nath"));
+        Student zhangsan = new Student("zhangsan", mCourse);
+        Student lisi = new Student("lisi", mCourse);
+        Student wangwu = new Student("wangwu", mCourse);
 
+        List<Student> students = new ArrayList<>();
+        students.add(zhangsan);
+        students.add(lisi);
+        students.add(wangwu);
+
+//        Observable.from(students)
+//                .map(new Func1<Student, String>() {
+//                    @Override
+//                    public String call(Student student) {
+//                        return student.getName();
+//                    }
+//                })
+//                .subscribe(new Subscriber<String>() {
+//                    @Override
+//                    public void onCompleted() {
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                    }
+//                    @Override
+//                    public void onNext(String s) {
+//
+//                    }
+//                });
+
+        Observable.from(students).map(s->{
+            return s.getName();
+        }).subscribe(s->{
+            Log.e(TAG, "onNext = " + s);
+        });
+    }
+
+    /**
+     * 打印所有课程的名称
+     */
+    private void observableFlatMap() {
+        List<Course> mCourse = new ArrayList<>();
+        mCourse.add(new Course("English"));
+        mCourse.add(new Course("Chinese"));
+        mCourse.add(new Course("Nath"));
+        Student zhangsan = new Student("zhangsan", mCourse);
+        Student lisi = new Student("lisi", mCourse);
+        Student wangwu = new Student("wangwu", mCourse);
+        List<Student> students = new ArrayList<>();
+        students.add(zhangsan);
+        students.add(lisi);
+        students.add(wangwu);
+
+//        Observable.from(students)
+//                .flatMap(new Func1<Student, Observable<Course>>() {
+//                    @Override
+//                    public Observable<Course> call(Student student) {
+//                        return Observable.from(student.getmList());
+//                    }
+//                })
+//                .subscribe(new Subscriber<Course>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Course course) {
+//                        Log.e(TAG, "onNext: " + course.getCoursename());
+//                    }
+//                });
+
+        Observable.from(students)
+                .flatMap(s->{return Observable.from(s.getmList());})
+                .subscribe(course ->{ Log.e(TAG, "onNext: " + course.getCoursename());});
+    }
+
+    /**
+     * buffer转化符
+     */
+    private void observableBuffer() {
+        final String[] mails = new String[]{"Here is an email!", "Another email!", "Yet another email!"};
+        Observable<String> endlessMail = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                try {
+                    if (subscriber.isUnsubscribed()) return;
+                    Random random = new Random();
+                    while (true) {
+                        String mail = mails[random.nextInt(mails.length)];
+                        subscriber.onNext(mail);
+                        Thread.sleep(1000);
+                    }
+                } catch (Exception ex) {
+                    subscriber.onError(ex);
+                }
+            }
+        });
+        endlessMail.buffer(3, TimeUnit.SECONDS).subscribe(new Action1<List<String>>() {
+            @Override
+            public void call(List<String> strings) {
+                System.out.println(String.format("You've got %d new messages!  Here they are!", strings.size()));
+                for (int i = 0; i < strings.size(); i++)
+                    System.out.println("**" + strings.get(i).toString());
+            }
+        });
+    }
+
+    String BASE_URL = "http://www.izaodao.com/Api/";
+    retrofit2.Retrofit retrofit = new retrofit2.Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
 
 

@@ -5,7 +5,7 @@ import android.view.View;
 /**
  * Created by Administrator on 2016/8/13.
  */
-public interface OnKeyListener {
+public interface OnKeyWorkListener {
     /**
      * @Description 按中心键的时候
      * @param view 监听事件的view

@@ -8,11 +8,20 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
+
+       <Space
+           android:layout_weight="1"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />
         <TextView android:id="@+id/topTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/KeyBoardItemTextStyle"
             android:layout_weight="1"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
     <!-- second line -->
     <LinearLayout
@@ -42,10 +51,18 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
+        <Space
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
         <TextView android:id="@+id/bottomTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             style="@style/KeyBoardItemTextStyle"
             android:layout_weight="1"/>
+        <Space
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

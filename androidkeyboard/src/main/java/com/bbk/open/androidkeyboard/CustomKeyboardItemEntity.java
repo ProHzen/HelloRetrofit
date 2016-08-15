@@ -37,11 +37,23 @@ public class CustomKeyboardItemEntity {
     }
 
     public void setLeft() {
-        switchString(mLeftText, mCenterText);
+       // switchString(mLeftText, mCenterText);
+        if (mLeftText == null) {
+            return;
+        }
+        String temp = mLeftText;
+        mLeftText = mCenterText;
+        mCenterText = temp;
     }
 
     public void setTop() {
         switchString(mTopText, mCenterText);
+        if (mTopText == null) {
+            return;
+        }
+        String temp = mTopText;
+        mTopText = mCenterText;
+        mCenterText = temp;
     }
 
     public void setBottom() {

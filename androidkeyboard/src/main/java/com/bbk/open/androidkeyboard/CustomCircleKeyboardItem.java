@@ -2,8 +2,10 @@ package com.bbk.open.androidkeyboard;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -12,7 +14,7 @@ import android.widget.TextView;
 /**
  * Created by Administrator on 2016/8/13.
  */
-public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnKeyListener {
+public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnTouchListener {
 
     private static final String TAG = "CustomCircleKeyboardItem";
 
@@ -78,7 +80,7 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnK
      * 初始化数据
      */
     private void initData() {
-        centerButton.setOnKeyListener(this);
+        centerButton.setOnTouchListener(this);
         //初始化数据
         mDatas = new CustomKeyboardItemEntity("A", "B", "C", "D", "E");
         setData(mDatas);
@@ -92,8 +94,20 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnK
     }
 
     @Override
-    public boolean onKey(View view, int i, KeyEvent keyEvent) {
-        return false;
+    public boolean onTouchEvent(MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
+        Log.e(TAG, "onTouchEvent: event.getX = " + x + "event.getY = " + y);
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (x > topTextView.getLeft() && x < topTextView.getRight()) {
+                if (y > topTextView.getTop() && y < topTextView.getBottom()) {
+                    mDatasBackup.setTop();
+                    Log.e(TAG, "topTextView: " + topTextView.getText());
+                }
+            }
+        }
+        updateDataBackup();
+        return true;
     }
 
     /**
@@ -108,5 +122,22 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnK
         rightTextView.setText(data.getRightText());
         bottomTextView.setText(data.getBottomText());
         centerButton.setText(data.getCenterText());
+    }
+
+    /**
+     * 更新数据
+     */
+    public void updateDataBackup() {
+        leftTextView.setText(mDatasBackup.getLeftText());
+        topTextView.setText(mDatasBackup.getTopText());
+        rightTextView.setText(mDatasBackup.getRightText());
+        bottomTextView.setText(mDatasBackup.getBottomText());
+        centerButton.setText(mDatasBackup.getCenterText());
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        Log.e(TAG, "onTouchEvent: event.getX = " + motionEvent.getX() + "event.getY = " + motionEvent.getY());
+        return false;
     }
 }

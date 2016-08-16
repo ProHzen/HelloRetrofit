@@ -25,6 +25,7 @@
     </LinearLayout>
     <!-- second line -->
     <LinearLayout
+        android:id="@+id/layout_center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -47,6 +48,7 @@
     </LinearLayout>
     <!-- third line -->
     <LinearLayout
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

@@ -16,7 +16,7 @@ public class CustomKeyboardItemEntity {
 
     private String mCenterText;
 
-    public CustomKeyboardItemEntity(String mTopText, String mBottomText, String mLeftText, String mRightText, String mCenterText) {
+    public CustomKeyboardItemEntity(String mCenterText, String mLeftText, String mTopText, String mRightText, String mBottomText) {
         this.mTopText = mTopText;
         this.mBottomText = mBottomText;
         this.mLeftText = mLeftText;
@@ -24,8 +24,8 @@ public class CustomKeyboardItemEntity {
         this.mCenterText = mCenterText;
     }
 
-    public CustomKeyboardItemEntity(final String center, final String left, final String top, final String right) {
-        this(center, left, top, right, null);
+    public CustomKeyboardItemEntity(final String mCenterText, final String mLeftText, final String mTopText, final String mRightText) {
+        this(mCenterText, mLeftText, mTopText, mRightText, null);
     }
 
     /**
@@ -37,7 +37,6 @@ public class CustomKeyboardItemEntity {
     }
 
     public void setLeft() {
-       // switchString(mLeftText, mCenterText);
         if (mLeftText == null) {
             return;
         }
@@ -47,7 +46,6 @@ public class CustomKeyboardItemEntity {
     }
 
     public void setTop() {
-        switchString(mTopText, mCenterText);
         if (mTopText == null) {
             return;
         }
@@ -57,11 +55,21 @@ public class CustomKeyboardItemEntity {
     }
 
     public void setBottom() {
-        switchString(mBottomText, mCenterText);
+        if (mBottomText == null) {
+            return;
+        }
+        String temp = mBottomText;
+        mBottomText = mCenterText;
+        mCenterText = temp;
     }
 
     public void setRight() {
-        switchString(mRightText, mCenterText);
+        if (mRightText == null) {
+            return;
+        }
+        String temp = mRightText;
+        mRightText = mCenterText;
+        mCenterText = temp;
     }
 
     public String getNumText() {

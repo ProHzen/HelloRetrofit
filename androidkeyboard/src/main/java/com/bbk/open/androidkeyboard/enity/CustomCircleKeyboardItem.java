@@ -1,9 +1,9 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.enity;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bbk.open.androidkeyboard.activity.MainActivity;
+import com.bbk.open.androidkeyboard.listener.OnFinshListener;
+import com.bbk.open.androidkeyboard.listener.OnKeyWorkListener;
+import com.bbk.open.androidkeyboard.R;
 
 /**
  * Created by Administrator on 2016/8/13.
@@ -57,7 +63,6 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnT
         }
         inflateLayout();
         initUI();
-        initData();
     }
 
     /**
@@ -86,52 +91,92 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnT
     }
 
     /**
-     * 初始化数据
-     */
-    private void initData() {
-      //  centerButton.setOnTouchListener(this);
-        //初始化数据
-      //  mDatas = new CustomKeyboardItemEntity("A", "B", "C", "D", "E");
-      //  setData(mDatas);
-    }
-
-    /**
      * @param onKeyWorkListener the mOnKeyWorkListener to set
      */
     public void setOnKeyWorkListener(final OnKeyWorkListener onKeyWorkListener) {
         this.mOnKeyWorkListener = onKeyWorkListener;
     }
 
+    float x1 = 0;
+    float x2 = 0;
+    float y1 = 0;
+    float y2 = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-                Log.e(TAG, "onTouchEvent: event.getX = " + x + "event.getY = " + y);
-                Log.e(TAG, "bottomTextViewTop: " + bottomTextView.getTop() + "bottomTextViewBottom: " + bottomTextView.getBottom());
-                if (x >= topTextView.getLeft() && x <= topTextView.getRight()) {
-                    if (y >= topTextView.getTop() && y <= topTextView.getBottom()) {
-                        mDatasBackup.setTop();
-                        if (mOnKeyWorkListener != null) {
-                            mOnKeyWorkListener.onDpadCenter(this);
-                        }
-                    } else if (y >= layoutBottom.getTop() && y <= layoutBottom.getBottom()) {
-                        mDatasBackup.setBottom();
-                    }
-                } else if (x < topTextView.getLeft()) {
-                    if (y >= layoutCenter.getTop() && y <= layoutBottom.getBottom()) {
-                        mDatasBackup.setLeft();
-                    }
-                } else if (x > topTextView.getRight()) {
-                    if (y >= layoutCenter.getTop() && y <= layoutBottom.getBottom()) {
-                        mDatasBackup.setRight();
-                    }
-                }
-                updateDataBackup();
-                break;
+        boolean flag = false;
+        //int action = event.getAction();
+//        switch (action) {
+//            case MotionEvent.ACTION_DOWN:
+//                float x = event.getX();
+//                float y = event.getY();
+//                Log.e(TAG, "onTouchEvent: event.getX = " + x + "event.getY = " + y);
+//                Log.e(TAG, "bottomTextViewTop: " + bottomTextView.getTop() + "bottomTextViewBottom: " + bottomTextView.getBottom());
+//                if (x >= topTextView.getLeft() && x <= topTextView.getRight()) {
+//                    if (y >= topTextView.getTop() && y <= topTextView.getBottom()) {
+//                        //mDatasBackup.setTop();
+//                        if (mOnKeyWorkListener != null) {
+//                            mOnKeyWorkListener.onDpadCenter(CustomCircleKeyboardItem.this);
+//                        }
+//                    } else if (y >= layoutBottom.getTop() && y <= layoutBottom.getBottom()) {
+//                        //mDatasBackup.setBottom();
+//                        if (mOnKeyWorkListener != null) {
+//                            mOnKeyWorkListener.onDpadCenter(CustomCircleKeyboardItem.this);
+//                        }
+//                    }
+//                } else if (x < topTextView.getLeft()) {
+//                    if (y >= layoutCenter.getTop() && y <= layoutBottom.getBottom()) {
+//                        //mDatasBackup.setLeft();
+//                        if (mOnKeyWorkListener != null) {
+//                            mOnKeyWorkListener.onDpadCenter(CustomCircleKeyboardItem.this);
+//                        }
+//                    }
+//                } else if (x > topTextView.getRight()) {
+//                    if (y >= layoutCenter.getTop() && y <= layoutBottom.getBottom()) {
+//                       // mDatasBackup.setRight();
+//                        if (mOnKeyWorkListener != null) {
+//                            mOnKeyWorkListener.onDpadCenter(CustomCircleKeyboardItem.this);
+//                        }
+//                    }
+//                }
+
+            //    updateDataBackup();
+//                break;
+//        }
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            //当手指按下的时候
+            x1 = event.getX();
+            y1 = event.getY();
         }
+        if(event.getAction() == MotionEvent.ACTION_UP) {
+            //当手指离开的时候
+            x2 = event.getX();
+            y2 = event.getY();
+            if(y1 - y2 > 50) {
+               if (!TextUtils.isEmpty(mDatasBackup.getTopText())) {
+                   mDatasBackup.setTop();
+               }
+            } else if(y2 - y1 > 50) {
+                if (!TextUtils.isEmpty(mDatasBackup.getBottomText())) {
+                    mDatasBackup.setBottom();
+                }
+            } else if(x1 - x2 > 50) {
+                if (!TextUtils.isEmpty(mDatasBackup.getLeftText())) {
+                    mDatasBackup.setLeft();
+                }
+            } else if(x2 - x1 > 50) {
+                if (!TextUtils.isEmpty(mDatasBackup.getRightText())) {
+                    mDatasBackup.setRight();
+                }
+            } else {
+                mDatasBackup.setCenterText("2");
+                flag = true;
+            }
+            if (mOnKeyWorkListener != null) {
+                mOnKeyWorkListener.onDpadCenter(CustomCircleKeyboardItem.this, flag);
+            }
+        }
+
         return true;
     }
 
@@ -162,7 +207,6 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnT
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        Log.e(TAG, "onTouchEvent: event.getX = " + motionEvent.getX() + "event.getY = " + motionEvent.getY());
         return false;
     }
 
@@ -171,6 +215,15 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnT
      * @return 选中的字符
      */
     public String getSelectedString() {
+
+        ((MainActivity)getContext()).setOnFinishListener(new OnFinshListener() {
+
+            @Override
+            public void onFinish() {
+                Log.e(TAG, "onFinish: "+ mDatas.getCenterText());
+                mDatasBackup.setCenterText(mDatas.getCenterText());
+            }
+        });
         return mDatasBackup.getCenterText();
     }
 
@@ -195,4 +248,5 @@ public class CustomCircleKeyboardItem extends RelativeLayout implements View.OnT
         }
         this.setVisibility(View.GONE);
     }
+
 }

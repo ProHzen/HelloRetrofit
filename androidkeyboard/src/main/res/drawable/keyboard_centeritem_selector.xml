@@ -8,5 +8,6 @@
     <item android:state_focused="false" android:color="#ffffff"></item>
     <!-- 有焦点的时候 -->
     <item android:state_focused="true" android:color="#ff1e00"></item>
+
     <item android:color="#ff1e00"></item>
 </selector>

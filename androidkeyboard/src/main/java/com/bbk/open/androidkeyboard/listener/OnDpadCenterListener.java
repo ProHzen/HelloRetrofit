@@ -1,4 +1,4 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.listener;
 
 /**
  * Created by Administrator on 2016/8/16.

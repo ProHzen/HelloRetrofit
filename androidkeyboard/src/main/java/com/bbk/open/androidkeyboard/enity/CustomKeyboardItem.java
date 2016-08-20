@@ -1,10 +1,15 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.enity;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import com.bbk.open.androidkeyboard.listener.OnDpadCenterListener;
+import com.bbk.open.androidkeyboard.listener.OnKeyWorkListener;
+import com.bbk.open.androidkeyboard.R;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -65,19 +70,6 @@ public class CustomKeyboardItem extends FrameLayout implements OnKeyWorkListener
     private void initData() {
         circleKeyboardItem.setOnKeyWorkListener(this);
         numKeyboardItem.setOnKeyWorkListener(this);
-        numKeyboardItem.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mOnDpadCenterListener.onDpadCenter(getSelectedString());
-            }
-        });
-        numKeyboardItem.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                circleKeyboardItem.setVisibility(View.VISIBLE);
-                return true;
-            }
-        });
     }
 
     /**
@@ -105,18 +97,29 @@ public class CustomKeyboardItem extends FrameLayout implements OnKeyWorkListener
     private boolean showAnim = false;
 
     @Override
-    public void onDpadCenter(View view) {
+    public void onDpadCenter(View view, boolean flag) {
         if (view == numKeyboardItem && numKeyboardItem.isShown()
                 && !circleKeyboardItem.isShown()) {
-            circleKeyboardItem.appearWithAnimation(showAnim);
-            numKeyboardItem.disappearWithAnimation(showAnim);
+            if (null != mOnDpadCenterListener) {
+                if (flag) {
+                    Log.e(TAG, "onClick: " + getSelectedString());
+                    circleKeyboardItem.appearWithAnimation(showAnim);
+                    numKeyboardItem.disappearWithAnimation(showAnim);
+                } else {
+                    mOnDpadCenterListener.onDpadCenter(circleKeyboardItem.getSelectedString());
+                }
+            }
         } else if (view == circleKeyboardItem) {
             if (null != mOnDpadCenterListener) {
-                mOnDpadCenterListener.onDpadCenter(circleKeyboardItem.getSelectedString());
+                if (!flag) {
+                    mOnDpadCenterListener.onDpadCenter(circleKeyboardItem.getSelectedString());
+                }
+                circleKeyboardItem.disappearWithAnimation(showAnim);
+                numKeyboardItem.appearWithAnimation(showAnim);
             }
         }
-
     }
+
     private OnDpadCenterListener mOnDpadCenterListener;
 
     /**

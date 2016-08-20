@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.bbk.open.interpolator.MainActivity">
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/left_layout"
+        style="@style/base_percent_wh"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="20%">
+
+        <Button
+            android:id="@+id/btn_one"
+            android:text="线性插值器"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_two"
+            android:text="加速度插值器"
+            android:layout_below="@id/btn_one"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_three"
+            android:text="减速插值器"
+            android:layout_below="@id/btn_two"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_four"
+            android:text="先加速后减速插值器"
+            android:layout_below="@id/btn_three"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_five"
+            android:text="初始偏移插值器"
+            android:layout_below="@id/btn_four"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_six"
+            android:text="结束偏移插值器"
+            android:layout_below="@id/btn_five"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_seven"
+            android:text="偏移插值器"
+            android:layout_below="@id/btn_six"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_eight"
+            android:layout_below="@id/btn_seven"
+            android:text="周期插值器"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_nine"
+            android:layout_below="@id/btn_seven"
+            android:text="弹跳插值器"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+        <Button
+            android:id="@+id/btn_ten"
+            android:layout_below="@id/btn_seven"
+            android:text="自定义插值器"
+            style="@style/base_percent_wh"
+            app:layout_heightPercent="10%"
+            app:layout_widthPercent="100%"/>
+
+    </android.support.percent.PercentRelativeLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/right_layout"
+        style="@style/base_percent_wh"
+        android:layout_toRightOf="@id/left_layout"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="80%">
+
+        <LinearLayout
+            android:gravity="center"
+            android:id="@+id/anim_layout"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="动画"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </android.support.percent.PercentRelativeLayout>
+
+
+</android.support.percent.PercentRelativeLayout>

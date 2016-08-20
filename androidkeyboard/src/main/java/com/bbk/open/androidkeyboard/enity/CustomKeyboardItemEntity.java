@@ -1,4 +1,4 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.enity;
 
 /**
  * 存放圆形circle数据

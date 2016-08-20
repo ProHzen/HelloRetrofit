@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:padding="5dp"
+    android:background="#dddddd">
+
+    <com.bbk.open.androidkeyboard.enity.CustomNumKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/item1"
+        android:gravity="center"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"/>
+
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item2"
+        android:layout_toRightOf="@id/item1" />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item3"
+        android:layout_toRightOf="@id/item2" />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item4"
+        android:layout_below="@id/item1"
+        />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item5"
+        android:layout_toRightOf="@id/item4"
+        android:layout_below="@id/item2" />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item6"
+        android:layout_toRightOf="@id/item5"
+        android:layout_below="@id/item3"
+        />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item7"
+        android:layout_below="@id/item4"
+        />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item8"
+        android:layout_toRightOf="@id/item7"
+        android:layout_below="@id/item5" />
+    <com.bbk.open.androidkeyboard.enity.CustomKeyboardItem
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:id="@+id/item9"
+        android:layout_toRightOf="@id/item8"
+        android:layout_below="@id/item6" />
+
+    <ImageButton android:id="@+id/itemClear"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        style="@style/KeyBoardCenterNumTextStyle"
+        android:src="@drawable/keyboard_clearitem_selector"
+        android:gravity="center"
+        android:layout_below="@id/item7"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:layout_marginLeft="@dimen/item_margin"
+        android:layout_marginTop="@dimen/item_margin"
+        />
+    <Button android:id="@+id/item0"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        style="@style/KeyBoardCenterNumTextStyle"
+        android:text="0"
+        android:gravity="center"
+        android:layout_toRightOf="@id/itemClear"
+        android:layout_below="@id/item8"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        />
+    <ImageButton android:id="@+id/itemDelete"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        style="@style/KeyBoardCenterNumTextStyle"
+        android:src="@drawable/keyboard_delitem_selector"
+        android:gravity="center"
+        android:layout_toRightOf="@id/item0"
+        android:layout_below="@id/item9"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="33%"
+        android:layout_marginLeft="@dimen/item_margin"
+        android:layout_marginTop="@dimen/item_margin"
+        />
+
+</android.support.percent.PercentRelativeLayout>

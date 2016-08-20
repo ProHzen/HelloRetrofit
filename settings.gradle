@@ -1,1 +1,1 @@
-include ':app', ':androidkeyboard'
+include ':app', ':androidkeyboard', ':interpolator'

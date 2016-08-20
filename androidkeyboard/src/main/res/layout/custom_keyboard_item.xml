@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.bbk.open.androidkeyboard.CustomCircleKeyboardItem
-        android:id="@+id/custom_circle_keyboard_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-    </com.bbk.open.androidkeyboard.CustomCircleKeyboardItem>
-
-
-    <com.bbk.open.androidkeyboard.CustomNumKeyboardItem
+    <com.bbk.open.androidkeyboard.enity.CustomNumKeyboardItem
         android:id="@+id/custom_number_keyboard_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    >
+        app:layout_heightPercent="100%"
+        android:gravity="center"
+        app:layout_widthPercent="100%">
 
-    </com.bbk.open.androidkeyboard.CustomNumKeyboardItem>
-</FrameLayout>
+    </com.bbk.open.androidkeyboard.enity.CustomNumKeyboardItem>
+
+
+    <com.bbk.open.androidkeyboard.enity.CustomCircleKeyboardItem
+        android:id="@+id/custom_circle_keyboard_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_heightPercent="100%"
+        android:gravity="center"
+        app:layout_widthPercent="100%">
+
+    </com.bbk.open.androidkeyboard.enity.CustomCircleKeyboardItem>
+
+</android.support.percent.PercentFrameLayout>

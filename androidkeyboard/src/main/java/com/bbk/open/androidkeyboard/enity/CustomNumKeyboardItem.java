@@ -1,15 +1,18 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.enity;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bbk.open.androidkeyboard.listener.OnDpadCenterListener;
+import com.bbk.open.androidkeyboard.listener.OnKeyWorkListener;
+import com.bbk.open.androidkeyboard.R;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -62,6 +65,16 @@ public class CustomNumKeyboardItem extends LinearLayout implements View.OnClickL
 
     private void initData() {
         mNumButton.setOnClickListener(this);
+        mNumButton.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                if (mOnKeyWorkListener != null) {
+                    mOnKeyWorkListener.onDpadCenter(CustomNumKeyboardItem.this, true);
+                }
+                return true;
+            }
+        });
         //初始化数据
         mData = new CustomKeyboardItemEntity("A", "B", "C", "D", "E");
         setData(mData);
@@ -80,7 +93,7 @@ public class CustomNumKeyboardItem extends LinearLayout implements View.OnClickL
             Log.e(TAG, "onClick: " + getSelectedString());
         }
         if (mOnKeyWorkListener != null) {
-            mOnKeyWorkListener.onDpadCenter(this);
+            mOnKeyWorkListener.onDpadCenter(CustomNumKeyboardItem.this, false);
         }
     }
 

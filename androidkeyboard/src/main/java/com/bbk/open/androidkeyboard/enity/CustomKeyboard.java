@@ -1,4 +1,4 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.enity;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import com.bbk.open.androidkeyboard.listener.OnDpadCenterListener;
+import com.bbk.open.androidkeyboard.R;
 
 /**
  * Created by Administrator on 2016/8/16.
@@ -57,9 +59,10 @@ public class CustomKeyboard extends RelativeLayout {
 
     private void inflateLayout() {
         try {
-            LayoutInflater.from(getContext()).inflate(R.layout.custom_keyboard, this, true);
+            LayoutInflater.from(getContext()).inflate(R.layout.custom_keyboard_percent, this, true);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e(TAG, "load: isInEditMode" + e.toString());
         }
     }
 
@@ -88,12 +91,9 @@ public class CustomKeyboard extends RelativeLayout {
         String[] dataItem7 = getResources().getStringArray(R.array.item7);
         String[] dataItem8 = getResources().getStringArray(R.array.item8);
         String[] dataItem9 = getResources().getStringArray(R.array.item9);
-
+        mItem1 = (CustomNumKeyboardItem) findViewById(R.id.item1);
         CustomKeyboardItemEntity cEntity = new CustomKeyboardItemEntity(
                 dataItem1[0], "", "", "");
-        if (mItem1 == null) {
-            Log.e("null", "mItem1 null");
-        }
         mItem1.setData(cEntity);
         cEntity = new CustomKeyboardItemEntity(
                 dataItem2[0], dataItem2[1], dataItem2[2], dataItem2[3]);
@@ -127,7 +127,6 @@ public class CustomKeyboard extends RelativeLayout {
     public OnDpadCenterListener getOnDpadCenterListener() {
         return mOnDpadCenterListener;
     }
-
     /**
      * @param onDpadCenterListener the onDpadCenterListener to set
      */

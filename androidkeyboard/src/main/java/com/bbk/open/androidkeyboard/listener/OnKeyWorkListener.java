@@ -1,4 +1,4 @@
-package com.bbk.open.androidkeyboard;
+package com.bbk.open.androidkeyboard.listener;
 
 import android.view.View;
 
@@ -10,7 +10,7 @@ public interface OnKeyWorkListener {
      * @Description 按中心键的时候
      * @param view 监听事件的view
      */
-    void onDpadCenter(View view);
+    void onDpadCenter(View view, boolean flag);
 
     /**
      * @Description 按返回的时候
